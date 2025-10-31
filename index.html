@@ -21,87 +21,156 @@
       to{ opacity:1; transform: translateY(0); }
     }
 
+    /* Grid Container */
+    .projects-grid{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Project Card */
     .project-card{
-      transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
-      cursor:pointer;
-      position:absolute;
-      overflow:hidden;
+      transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      background: white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
 
     .project-card::before{
       content:'';
       position:absolute; inset:0;
       background: linear-gradient(135deg, rgba(102,126,234,0.9), rgba(118,75,162,0.9));
-      opacity:0; transition: opacity 0.4s ease; z-index:1;
+      opacity:0; 
+      transition: opacity 0.4s ease; 
+      z-index:1;
     }
+
     .project-card:hover::before{ opacity:1; }
+
     .project-card:hover{
-      transform: scale(1.15) rotate(0deg) !important;
+      transform: translateY(-10px) scale(1.03);
       box-shadow: 0 25px 50px rgba(0,0,0,0.4);
-      z-index:100;
+      z-index: 10;
     }
-    .project-card img{ transition: transform 0.4s ease; }
+
+    .project-card img{ 
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      transition: transform 0.4s ease; 
+    }
+
     .project-card:hover img{ transform: scale(1.1); }
 
     .project-info{
-      position:absolute; top:50%; left:50%;
+      position:absolute; 
+      top:50%; 
+      left:50%;
       transform: translate(-50%,-50%);
-      opacity:0; transition: opacity 0.4s ease; z-index:2;
-      text-align:center; color:#fff; width:80%;
+      opacity:0; 
+      transition: opacity 0.4s ease; 
+      z-index:2;
+      text-align:center; 
+      color:#fff; 
+      width:85%;
+      padding: 20px;
     }
+
     .project-card:hover .project-info{ opacity:1; }
 
+    .project-info h3{
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .project-info p{
+      font-size: 0.9rem;
+      line-height: 1.4;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    /* Lightbox */
     .lightbox{
-      display:none; position:fixed; inset:0;
+      display:none; 
+      position:fixed; 
+      inset:0;
       background: rgba(0,0,0,0.95);
-      z-index:1000; align-items:center; justify-content:center;
+      z-index:1000; 
+      align-items:center; 
+      justify-content:center;
       animation: fadeIn 0.3s ease;
     }
     .lightbox.active{ display:flex; }
     @keyframes fadeIn{ from{opacity:0} to{opacity:1} }
 
-    .lightbox-content{ max-width:90%; max-height:90%; animation: scaleIn 0.3s ease; }
+    .lightbox-content{ 
+      max-width:90%; 
+      max-height:90%; 
+      animation: scaleIn 0.3s ease;
+      border-radius: 12px;
+    }
     @keyframes scaleIn{ from{transform:scale(.8);opacity:0} to{transform:scale(1);opacity:1} }
 
     .close-btn{
-      position:absolute; top:20px; right:40px; font-size:40px; color:#fff; cursor:pointer;
+      position:absolute; 
+      top:20px; 
+      right:40px; 
+      font-size:40px; 
+      color:#fff; 
+      cursor:pointer;
       transition: transform .2s ease;
+      z-index: 10;
     }
     .close-btn:hover{ transform: scale(1.2) rotate(90deg); }
 
-    /* Stagger delays 1..12 */
+    /* Stagger delays */
     .stagger-1{ animation-delay:.1s }
-    .stagger-2{ animation-delay:.2s }
-    .stagger-3{ animation-delay:.3s }
-    .stagger-4{ animation-delay:.4s }
-    .stagger-5{ animation-delay:.5s }
-    .stagger-6{ animation-delay:.6s }
-    .stagger-7{ animation-delay:.7s }
-    .stagger-8{ animation-delay:.8s }
-    .stagger-9{ animation-delay:.9s }
-    .stagger-10{ animation-delay:1.0s }
-    .stagger-11{ animation-delay:1.1s }
-    .stagger-12{ animation-delay:1.2s }
+    .stagger-2{ animation-delay:.15s }
+    .stagger-3{ animation-delay:.2s }
+    .stagger-4{ animation-delay:.25s }
+    .stagger-5{ animation-delay:.3s }
+    .stagger-6{ animation-delay:.35s }
+    .stagger-7{ animation-delay:.4s }
+    .stagger-8{ animation-delay:.45s }
+    .stagger-9{ animation-delay:.5s }
+    .stagger-10{ animation-delay:.55s }
+    .stagger-11{ animation-delay:.6s }
+    .stagger-12{ animation-delay:.65s }
 
-    /* Mobile - FIXED VERSION */
-    @media (max-width:768px){
-      #projects-gallery{ 
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        min-height: auto !important;
-        padding-bottom: 50px !important;
-        gap: 30px !important;
+    /* Tablet - 2 columns */
+    @media (max-width: 1024px){
+      .projects-grid{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
       }
-      .project-card{
-        position: relative !important;
-        width: 90% !important; 
-        max-width: 400px !important;
-        left: auto !important; 
-        right: auto !important;
-        top: auto !important;
-        margin-bottom: 0 !important; 
-        transform: rotate(0deg) !important;
+    }
+
+    /* Mobile - 1 column */
+    @media (max-width: 640px){
+      .projects-grid{
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 0 15px;
+      }
+      
+      .project-card img{
+        height: 240px;
+      }
+
+      .project-info h3{
+        font-size: 1.3rem;
+      }
+
+      .project-info p{
+        font-size: 0.85rem;
       }
     }
   </style>
@@ -118,8 +187,8 @@
       </p>
     </div>
 
-    <!-- Scattered Gallery -->
-    <div id="projects-gallery" class="relative mx-auto" style="min-height: 2600px; max-width: 1200px;"></div>
+    <!-- Grid Gallery -->
+    <div id="projects-gallery" class="projects-grid"></div>
 
     <!-- Footer -->
     <div class="text-center mt-16 fade-in">
@@ -141,93 +210,77 @@
 
   <script>
     // ===== CONFIGURE YOUR 12 PROJECTS HERE =====
-    // tip: update img, title, desc. style controls scattered position for desktop.
     const projects = [
-      // Existing 1..6 (unchanged)
       {
         img:'https://i.ibb.co/qFVb3m12/nama-MYne.gif',
         title:'Fandom MYne',
         desc:'Sejarah nama fandom MYne (fans Indonesia)',
-        style:'top:50px; left:5%; width:350px; transform: rotate(-5deg);',
         stagger:1
       },
       {
         img:'https://i.ibb.co/vCFHC2p1/aespa-nabati.gif',
         title:'aespa Meet & Greet 2024',
         desc:'aespa berfoto bersama AIU fanpro yaitu handbanner dan kue anniversary',
-        style:'top:120px; right:8%; width:320px; transform: rotate(3deg);',
         stagger:2
       },
       {
         img:'https://i.ibb.co/hxGRnwYv/aespa-handbanner.gif',
         title:'Meet & Greet 2024 - Fanpro Handbanner',
         desc:'aespa memegang handbanner, salah satu fanpro dari AIU',
-        style:'top:380px; left:15%; width:380px; transform: rotate(2deg);',
         stagger:3
       },
       {
         img:'https://i.ibb.co/Ng8KDcmZ/annivcake.jpg',
         title:'Meet & Greet 2024 - Fanpro Anniversary Cake',
-        desc:'Cake dengan desain khusus untuk merayakan debut anniversary aespa yang ke 4 tahun berhasil dipersembahkan kepada aespa',
-        style:'top:470px; right:5%; width:340px; transform: rotate(-4deg);',
+        desc:'Cake dengan desain khusus untuk merayakan debut anniversary aespa yang ke 4 tahun berhasam dipersembahkan kepada aespa',
         stagger:4
       },
       {
         img:'https://i.ibb.co/DfrXmxtH/fankit-nabati.jpg',
         title:'Fankit Event Meet & Greet aespa 2024',
         desc:'Fankit edisi Meet & Greet oleh aespainaunion',
-        style:'top:820px; left:10%; width:360px; transform: rotate(-3deg);',
         stagger:5
       },
       {
         img:'https://i.ibb.co/zh77Ft4H/fankit-HPL.jpg',
         title:'Fankit konser SYNK Hyperline 2023',
         desc:'Fankit edisi konser solo pertama aespa di Indonesia oleh aespainaunion',
-        style:'top:900px; right:12%; width:330px; transform: rotate(4deg);',
         stagger:6
       },
-
-      // New 7..12 (placeholders — replace freely)
       {
         img:'https://i.ibb.co/5grM7Jwp/fanpro-flashlight.gif',
         title:'Fan Project Flashlight SYNK Hyperline 2023',
         desc:'Fan project yang dikelola oleh aespainaunion untuk konser SYNK Hyperline 2023',
-        style:'top:1220px; left:6%; width:340px; transform: rotate(5deg);',
         stagger:7
       },
       {
         img:'https://i.ibb.co/d0z2rPz8/aiu-twi.jpg',
         title:'AIU Peduli Bencana Bali',
         desc:'Project kolaborasi bersama fanbase winter (Team Winter Indonesia)',
-        style:'top:1320px; right:10%; width:360px; transform: rotate(-6deg);',
         stagger:8
       },
       {
         img:'https://i.ibb.co/Xx4xx5m4/aiu-kanjuruhan.jpg',
         title:'aespainaunion Peduli Kanjuruhan',
         desc:'Fundraising untuk korban tragedi Kanjuruhan 2022',
-        style:'top:1580px; left:18%; width:380px; transform: rotate(2deg);',
         stagger:9
       },
       {
         img:'https://i.ibb.co/nsjycXVy/aiu-adopsi.jpg',
         title:'Project Adopsi Satwa',
         desc:'Menyambut comeback aespa - Next Level',
-        style:'top:1700px; right:7%; width:340px; transform: rotate(4deg);',
         stagger:10
       },
       {
         img:'https://i.ibb.co/JRQ4C1R8/Karina-bday2021.gif',
         title:'Birthday Project',
         desc:'Gift ultah Karina tahun 2021 (bucket flower dan snack Indonesia)',
-        style:'top:1980px; left:12%; width:360px; transform: rotate(-5deg);',
         stagger:11
       },
       {
         img:'https://i.ibb.co/VWX2Z6rk/aiu-cafeevent.gif',
         title:'Cafe Event oleh aespainaunion',
         desc:'Menyambut comeback aespa - Forever',
-        style:'top:2100px; right:12%; width:330px; transform: rotate(6deg);',
         stagger:12
       }
     ];
@@ -241,6 +294,7 @@
       lightbox.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
+
     function closeLightbox(){
       const lightbox = document.getElementById('lightbox');
       lightbox.classList.remove('active');
@@ -248,19 +302,20 @@
     }
 
     // Close on Escape
-    document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeLightbox(); } });
+    document.addEventListener('keydown', e => { 
+      if(e.key==='Escape'){ closeLightbox(); } 
+    });
 
     // Build project DOM
     const gallery = document.getElementById('projects-gallery');
     projects.forEach((p, idx) => {
       const card = document.createElement('div');
-      card.className = `project-card bg-white rounded-2xl shadow-xl overflow-hidden fade-in stagger-${p.stagger || (idx+1)}`;
-      card.style = p.style;
+      card.className = `project-card fade-in stagger-${p.stagger || (idx+1)}`;
       card.innerHTML = `
-        <img src="${p.img}" alt="${p.title}" class="w-full h-64 object-cover" />
+        <img src="${p.img}" alt="${p.title}" />
         <div class="project-info">
-          <h3 class="text-2xl font-bold mb-2">${p.title}</h3>
-          <p class="text-sm">${p.desc}</p>
+          <h3>${p.title}</h3>
+          <p>${p.desc}</p>
         </div>
       `;
       card.addEventListener('click', () => openLightbox(p.img, p.title, p.desc));
@@ -270,7 +325,9 @@
     // Scroll animation observer
     const observer = new IntersectionObserver((entries)=>{
       entries.forEach(entry => {
-        if(entry.isIntersecting){ entry.target.style.animationPlayState = 'running'; }
+        if(entry.isIntersecting){ 
+          entry.target.style.animationPlayState = 'running'; 
+        }
       });
     }, { threshold:0.1, rootMargin:'0px 0px -50px 0px' });
 
