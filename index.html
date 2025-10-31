@@ -1,314 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio - Hall of Projects</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>aespa INA Union Portfolio - Hall of Projects</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+    body{
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
 
-        .fade-in {
-            animation: fadeInUp 0.8s ease-out forwards;
-            opacity: 0;
-        }
+    .fade-in{ animation: fadeInUp 0.8s ease-out forwards; opacity:0; }
+    @keyframes fadeInUp{
+      from{ opacity:0; transform: translateY(30px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .project-card{
+      transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+      cursor:pointer;
+      position:absolute;
+      overflow:hidden;
+    }
 
-        .project-card {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            position: absolute;
-            overflow: hidden;
-        }
+    .project-card::before{
+      content:'';
+      position:absolute; inset:0;
+      background: linear-gradient(135deg, rgba(102,126,234,0.9), rgba(118,75,162,0.9));
+      opacity:0; transition: opacity 0.4s ease; z-index:1;
+    }
+    .project-card:hover::before{ opacity:1; }
+    .project-card:hover{
+      transform: scale(1.15) rotate(0deg) !important;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+      z-index:100;
+    }
+    .project-card img{ transition: transform 0.4s ease; }
+    .project-card:hover img{ transform: scale(1.1); }
 
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: 1;
-        }
+    .project-info{
+      position:absolute; top:50%; left:50%;
+      transform: translate(-50%,-50%);
+      opacity:0; transition: opacity 0.4s ease; z-index:2;
+      text-align:center; color:#fff; width:80%;
+    }
+    .project-card:hover .project-info{ opacity:1; }
 
-        .project-card:hover::before {
-            opacity: 1;
-        }
+    .lightbox{
+      display:none; position:fixed; inset:0;
+      background: rgba(0,0,0,0.95);
+      z-index:1000; align-items:center; justify-content:center;
+      animation: fadeIn 0.3s ease;
+    }
+    .lightbox.active{ display:flex; }
+    @keyframes fadeIn{ from{opacity:0} to{opacity:1} }
 
-        .project-card:hover {
-            transform: scale(1.15) rotate(0deg) !important;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-            z-index: 100;
-        }
+    .lightbox-content{ max-width:90%; max-height:90%; animation: scaleIn 0.3s ease; }
+    @keyframes scaleIn{ from{transform:scale(.8);opacity:0} to{transform:scale(1);opacity:1} }
 
-        .project-card img {
-            transition: transform 0.4s ease;
-        }
+    .close-btn{
+      position:absolute; top:20px; right:40px; font-size:40px; color:#fff; cursor:pointer;
+      transition: transform .2s ease;
+    }
+    .close-btn:hover{ transform: scale(1.2) rotate(90deg); }
 
-        .project-card:hover img {
-            transform: scale(1.1);
-        }
+    /* Stagger delays 1..12 */
+    .stagger-1{ animation-delay:.1s }
+    .stagger-2{ animation-delay:.2s }
+    .stagger-3{ animation-delay:.3s }
+    .stagger-4{ animation-delay:.4s }
+    .stagger-5{ animation-delay:.5s }
+    .stagger-6{ animation-delay:.6s }
+    .stagger-7{ animation-delay:.7s }
+    .stagger-8{ animation-delay:.8s }
+    .stagger-9{ animation-delay:.9s }
+    .stagger-10{ animation-delay:1.0s }
+    .stagger-11{ animation-delay:1.1s }
+    .stagger-12{ animation-delay:1.2s }
 
-        .project-info {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: 2;
-            text-align: center;
-            color: white;
-            width: 80%;
-        }
-
-        .project-card:hover .project-info {
-            opacity: 1;
-        }
-
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .lightbox.active {
-            display: flex;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .lightbox-content {
-            max-width: 90%;
-            max-height: 90%;
-            animation: scaleIn 0.3s ease;
-        }
-
-        @keyframes scaleIn {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            font-size: 40px;
-            color: white;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .close-btn:hover {
-            transform: scale(1.2) rotate(90deg);
-        }
-
-        .stagger-1 { animation-delay: 0.1s; }
-        .stagger-2 { animation-delay: 0.2s; }
-        .stagger-3 { animation-delay: 0.3s; }
-        .stagger-4 { animation-delay: 0.4s; }
-        .stagger-5 { animation-delay: 0.5s; }
-        .stagger-6 { animation-delay: 0.6s; }
-
-        /* Responsive adjustments for mobile */
-        @media (max-width: 768px) {
-            .project-card {
-                position: relative !important;
-                width: 90% !important;
-                left: 5% !important;
-                right: auto !important;
-                margin-bottom: 30px;
-                transform: rotate(0deg) !important;
-            }
-        }
-    </style>
+    /* Mobile */
+    @media (max-width:768px){
+      .project-card{
+        position:relative !important;
+        width:90% !important; left:5% !important; right:auto !important;
+        margin-bottom:30px; transform: rotate(0deg) !important;
+      }
+      #projects-gallery{ min-height:auto !important; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Hero Section -->
-    <div class="container mx-auto px-6 py-16">
-        <div class="text-center mb-16 fade-in">
-            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
-                My Project Hall
-            </h1>
-            <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-                Every project tells a story. Some succeeded, some failed, but all taught me something valuable. Here's my collection of work, experiments, and creative chaos.
-            </p>
-        </div>
-
-        <!-- Projects Scattered Gallery -->
-        <div class="relative mx-auto" style="min-height: 1400px; max-width: 1200px;">
-            <!-- Project 1 -->
-            <div class="project-card bg-white rounded-2xl shadow-xl overflow-hidden fade-in stagger-1" 
-                 style="top: 50px; left: 5%; width: 350px; transform: rotate(-5deg);"
-                 onclick="openLightbox('https://i.ibb.co.com/VcJLrHvq/Paket.jpg', 'Paket', 'Fankit Nabati')">
-                <img src="https://i.ibb.co.com/VcJLrHvq/Paket.jpg" alt="Project 1" class="w-full h-64 object-cover">
-                <div class="project-info">
-                    <h3 class="text-2xl font-bold mb-2">Fankit Nabati</h3>
-                    <p class="text-sm">Fankit Nabati untuk anniversary</p>
-                </div>
-            </div>
-
-            <!-- Project 2 -->
-            <div class="project-card bg-white rounded-2xl shadow-xl overflow-hidden fade-in stagger-2" 
-                 style="top: 120px; right: 8%; width: 320px; transform: rotate(3deg);"
-                 onclick="openLightbox('https://i.ibb.co.com/yn45bZ0K/Nabati.jpg', 'Nabati', 'Anniversary Fan Project')">
-                <img src="https://i.ibb.co.com/yn45bZ0K/Nabati.jpg" alt="Project 2" class="w-full h-64 object-cover">
-                <div class="project-info">
-                    <h3 class="text-2xl font-bold mb-2">Anniversary Fan Project</h3>
-                    <p class="text-sm">Anniversary Fan Project</p>
-                </div>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="project-card bg-white rounded-2xl shadow-xl overflow-hidden fade-in stagger-3" 
-                 style="top: 380px; left: 15%; width: 380px; transform: rotate(2deg);"
-                 onclick="openLightbox('https://i.ibb.co.com/Zz05Y2cX/Nama-MYne.jpg', 'Asal Nama MYne', 'Asal-usul nama fandom MYne')">
-                <img src="https://i.ibb.co.com/Zz05Y2cX/Nama-MYne.jpg" alt="Project 3" class="w-full h-64 object-cover">
-                <div class="project-info">
-                    <h3 class="text-2xl font-bold mb-2">Asal Nama MYne</h3>
-                    <p class="text-sm">Asal-usul nama fandom MYne</p>
-                </div>
-            </div>
-
-            <!-- Project 4 -->
-            <div class="project-card bg-white rounded-2xl shadow-xl overflow-hidden fade-in stagger-4" 
-                 style="top: 470px; right: 5%; width: 340px; transform: rotate(-4deg);"
-                 onclick="openLightbox('https://i.ibb.co.com/kVfMbcVY/MYne-diresmikan.jpg', 'Official MYne', 'MYne diresmikan oleh aespaofficial')">
-                <img src="https://i.ibb.co.com/kVfMbcVY/MYne-diresmikan.jpg" alt="Project 4" class="w-full h-64 object-cover">
-                <div class="project-info">
-                    <h3 class="text-2xl font-bold mb-2">Official MYne</h3>
-                    <p class="text-sm">MYne diresmikan oleh aespaofficial</p>
-                </div>
-            </div>
-
-            <!-- Project 5 -->
-            <div class="project-card bg-white rounded-2xl shadow-xl overflow-hidden fade-in stagger-5" 
-                 style="top: 820px; left: 10%; width: 360px; transform: rotate(-3deg);"
-                 onclick="openLightbox('https://i.ibb.co.com/V0CQwR77/Project-Nabati.jpg', 'Laporan Project Nabati', 'kesuksesan project nabati')">
-                <img src="https://i.ibb.co.com/V0CQwR77/Project-Nabati.jpg" alt="Project 5" class="w-full h-64 object-cover">
-                <div class="project-info">
-                    <h3 class="text-2xl font-bold mb-2">Laporan Project Nabati</h3>
-                    <p class="text-sm">kesuksesan project nabati</p>
-                </div>
-            </div>
-
-            <!-- Project 6 -->
-            <div class="project-card bg-white rounded-2xl shadow-xl overflow-hidden fade-in stagger-6" 
-                 style="top: 900px; right: 12%; width: 330px; transform: rotate(4deg);"
-                 onclick="openLightbox('https://i.ibb.co.com/HL9yBMKx/aespa-banner.jpg', 'Hand banner', 'aespa with hand banner')">
-                <img src="https://i.ibb.co.com/HL9yBMKx/aespa-banner.jpg" alt="Project 6" class="w-full h-64 object-cover">
-                <div class="project-info">
-                    <h3 class="text-2xl font-bold mb-2">Hand banner</h3>
-                    <p class="text-sm">aespa with hand banner</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="text-center mt-16 fade-in">
-            <p class="text-white/80 text-lg">
-                Want to work together? Let's create something amazing.
-            </p>
-        </div>
+  <!-- Hero -->
+  <div class="container mx-auto px-6 py-16">
+    <div class="text-center mb-16 fade-in">
+      <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">My Project Hall</h1>
+      <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+        Every project tells a story. Some succeeded, some failed, but all taught me something valuable. Here's my collection of work, experiments, and creative chaos.
+      </p>
     </div>
 
-    <!-- Lightbox -->
-    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-        <span class="close-btn">&times;</span>
-        <div onclick="event.stopPropagation()">
-            <img id="lightbox-img" class="lightbox-content" src="" alt="Project Preview">
-            <div class="text-center mt-6">
-                <h3 id="lightbox-title" class="text-3xl font-bold text-white mb-2"></h3>
-                <p id="lightbox-desc" class="text-white/80 text-lg"></p>
-            </div>
-        </div>
+    <!-- Scattered Gallery -->
+    <div id="projects-gallery" class="relative mx-auto" style="min-height: 2600px; max-width: 1200px;"></div>
+
+    <!-- Footer -->
+    <div class="text-center mt-16 fade-in">
+      <p class="text-white/80 text-lg">Want to work together? Let's create something amazing.</p>
     </div>
+  </div>
 
-    <script>
-        function openLightbox(imgSrc, title, description) {
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxTitle = document.getElementById('lightbox-title');
-            const lightboxDesc = document.getElementById('lightbox-desc');
-            
-            lightboxImg.src = imgSrc;
-            lightboxTitle.textContent = title;
-            lightboxDesc.textContent = description;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <span class="close-btn">&times;</span>
+    <div onclick="event.stopPropagation()">
+      <img id="lightbox-img" class="lightbox-content" src="" alt="Project Preview" />
+      <div class="text-center mt-6">
+        <h3 id="lightbox-title" class="text-3xl font-bold text-white mb-2"></h3>
+        <p id="lightbox-desc" class="text-white/80 text-lg"></p>
+      </div>
+    </div>
+  </div>
 
-        function closeLightbox() {
-            const lightbox = document.getElementById('lightbox');
-            lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+  <script>
+    // ===== CONFIGURE YOUR 12 PROJECTS HERE =====
+    // tip: update img, title, desc. style controls scattered position for desktop.
+    const projects = [
+      // Existing 1..6 (unchanged)
+      {
+        img:'https://i.ibb.co/qFVb3m12/nama-MYne.gif',
+        title:'Fandom MYne',
+        desc:'Sejarah nama fandom MYne (fans Indonesia)',
+        style:'top:50px; left:5%; width:350px; transform: rotate(-5deg);',
+        stagger:1
+      },
+      {
+        img:'https://i.ibb.co/vCFHC2p1/aespa-nabati.gif',
+        title:'aespa meet&greet 2024',
+        desc:'aespa berfoto bersama AIU fanpro yaitu handbanner dan kue anniversary',
+        style:'top:120px; right:8%; width:320px; transform: rotate(3deg);',
+        stagger:2
+      },
+      {
+        img:'https://i.ibb.co/hxGRnwYv/aespa-handbanner.gif',
+        title:'meet&greet 2024 - fanpro hand banner',
+        desc:'aespa memegang hand banner, salah satu fanpro dari AIU',
+        style:'top:380px; left:15%; width:380px; transform: rotate(2deg);',
+        stagger:3
+      },
+      {
+        img:'https://i.ibb.co/Ng8KDcmZ/annivcake.jpg',
+        title:'meet&greet 2024 - fanpro anniversary cake',
+        desc:'Cake dengan desain khusus untuk merayakan debut anniversary aespa yang ke 4 tahun berhasil dipersembahkan kepada aespa',
+        style:'top:470px; right:5%; width:340px; transform: rotate(-4deg);',
+        stagger:4
+      },
+      {
+        img:'https://i.ibb.co/DfrXmxtH/fankit-nabati.jpg',
+        title:'Fankit event Meet & Greet aespa',
+        desc:'Fankit edisi Meet&Greet oleh AIU',
+        style:'top:820px; left:10%; width:360px; transform: rotate(-3deg);',
+        stagger:5
+      },
+      {
+        img:'https://i.ibb.co/zh77Ft4H/fankit-HPL.jpg',
+        title:'Fankit konser SYNK Hyperline 2023',
+        desc:'Fankit edisi konser solo pertama aespa di Indonesia oleh AIU',
+        style:'top:900px; right:12%; width:330px; transform: rotate(4deg);',
+        stagger:6
+      },
 
-        // Close on Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeLightbox();
-            }
-        });
+      // New 7..12 (placeholders — replace freely)
+      {
+        img:'https://i.ibb.co/5grM7Jwp/fanpro-flashlight.gif',
+        title:'Fan Project Flashlight',
+        desc:'Fan project yang dikelola oleh AIU untuk konser SYNK Hyperline 2023',
+        style:'top:1220px; left:6%; width:340px; transform: rotate(5deg);',
+        stagger:7
+      },
+      {
+        img:'https://i.ibb.co/d0z2rPz8/aiu-twi.jpg',
+        title:'AIU Peduli Bencana Bali',
+        desc:'Project kolaborasi bersama fanbase winter (Team Winter Indonesia)',
+        style:'top:1320px; right:10%; width:360px; transform: rotate(-6deg);',
+        stagger:8
+      },
+      {
+        img:'https://i.ibb.co/Xx4xx5m4/aiu-kanjuruhan.jpg',
+        title:'AIU Peduli Kanjuruhan',
+        desc:'Fundraising untuk korban tragedi Kanjuruhan 2022',
+        style:'top:1580px; left:18%; width:380px; transform: rotate(2deg);',
+        stagger:9
+      },
+      {
+        img:'https://i.ibb.co/nsjycXVy/aiu-adopsi.jpg',
+        title:'Project adopsi satwa',
+        desc:'Menyambut comeback aespa - Next Level',
+        style:'top:1700px; right:7%; width:340px; transform: rotate(4deg);',
+        stagger:10
+      },
+      {
+        img:'https://i.ibb.co/JRQ4C1R8/Karina-bday2021.gif',
+        title:'Birthday project',
+        desc:'Gift ultah Karina tahun 2021 (bucket flower dan snack Indonesia)',
+        style:'top:1980px; left:12%; width:360px; transform: rotate(-5deg);',
+        stagger:11
+      },
+      {
+        img:'https://i.ibb.co/VWX2Z6rk/aiu-cafeevent.gif',
+        title:'Cafe event oleh AIU',
+        desc:'Menyambut comeback aespa - Forever',
+        style:'top:2100px; right:12%; width:330px; transform: rotate(6deg);',
+        stagger:12
+      }
+    ];
 
-        // Scroll animation observer
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+    // ===== RENDER CARDS =====
+    function openLightbox(imgSrc, title, description){
+      const lightbox = document.getElementById('lightbox');
+      document.getElementById('lightbox-img').src = imgSrc;
+      document.getElementById('lightbox-title').textContent = title;
+      document.getElementById('lightbox-desc').textContent = description;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(){
+      const lightbox = document.getElementById('lightbox');
+      lightbox.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
 
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
-                }
-            });
-        }, observerOptions);
+    // Close on Escape
+    document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeLightbox(); } });
 
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-    </script>
+    // Build project DOM
+    const gallery = document.getElementById('projects-gallery');
+    projects.forEach((p, idx) => {
+      const card = document.createElement('div');
+      card.className = `project-card bg-white rounded-2xl shadow-xl overflow-hidden fade-in stagger-${p.stagger || (idx+1)}`;
+      card.style = p.style;
+      card.innerHTML = `
+        <img src="${p.img}" alt="${p.title}" class="w-full h-64 object-cover" />
+        <div class="project-info">
+          <h3 class="text-2xl font-bold mb-2">${p.title}</h3>
+          <p class="text-sm">${p.desc}</p>
+        </div>
+      `;
+      card.addEventListener('click', () => openLightbox(p.img, p.title, p.desc));
+      gallery.appendChild(card);
+    });
+
+    // Scroll animation observer
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry => {
+        if(entry.isIntersecting){ entry.target.style.animationPlayState = 'running'; }
+      });
+    }, { threshold:0.1, rootMargin:'0px 0px -50px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
