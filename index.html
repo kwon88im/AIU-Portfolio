@@ -107,6 +107,7 @@
       align-items:center; 
       justify-content:center;
       animation: fadeIn 0.3s ease;
+      padding: 20px;
     }
     .lightbox.active{ display:flex; }
     @keyframes fadeIn{ from{opacity:0} to{opacity:1} }
@@ -114,8 +115,12 @@
     .lightbox-content{ 
       max-width:90%; 
       max-height:90%; 
+      width: auto;
+      height: auto;
+      object-fit: contain;
       animation: scaleIn 0.3s ease;
       border-radius: 12px;
+      margin: auto;
     }
     @keyframes scaleIn{ from{transform:scale(.8);opacity:0} to{transform:scale(1);opacity:1} }
 
@@ -186,9 +191,9 @@
     <div class="text-center mb-16 fade-in">
       <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">aespainaunion Project Hall</h1>
       <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-       Setiap proyek punya ceritanya... ada yang berhasil, ada yang gagal.<br> 
-        Namun cinta kami pada aespa dan komitmen menjadi ruang aman bagi MYne (fans aespa di Indonesia) mendorong kami terus maju.<br>
-       Mari rayakan pencapaian dan hargai prosesnya.
+       Sejak aespainaunion berdiri, kami telah menjalankan berbagai proyek—mulai dari konser hingga kegiatan sosial.<br> 
+       Di Project Hall ini, kalian bisa melihat detail setiap langkah yang pernah kami lakukan.<br>
+       Semua ini tidak akan terwujud tanpa bantuan dan dukungan MYne. Terima kasih sudah selalu bersama kami.
       </p>
     </div>
 
@@ -224,37 +229,37 @@
       },
       {
         img:'./images/aespa-nabati.gif',
-        title:'aespa Meet & Greet 2024',
+        title:'aespa Meet and Greet Nabati in Richoco Land Jakarta 2024',
         desc:'aespa berfoto bersama fanpro aespainaunion, yaitu handbanner dan kue anniversary',
         stagger:2
       },
       {
         img:'./images/aespa-handbanner.gif',
-        title:'Meet & Greet 2024 - Fanpro Handbanner',
-        desc:'aespa memegang hand banner, salah satu fanpro dari aespainaunion',
+        title:'aespa Meet and Greet Nabati in Richoco Land Jakarta 2024',
+        desc:'aespa memegang dan membaca Project Handbanner dua sisi buatan aespainaunion. Satu sisi bertuliskan, ‘Because aespa exist, MYne shine even more,’ dan sisi lainnya berisi ucapan, ‘Happy 4th Anniversary, our aespa.’',
         stagger:3
       },
       {
         img:'./images/annivcake.jpg',
-        title:'Meet & Greet 2024 - Fanpro Anniversary Cake',
-        desc:'Cake dengan desain khusus untuk merayakan debut anniversary aespa yang ke 4 tahun berhasam dipersembahkan kepada aespa',
+        title:'aespa Meet and Greet Nabati in Richoco Land Jakarta 2024',
+        desc:'Kue yang dirancang serta dibuat secara khusus untuk diberikan kepada aespa dalam rangka merayakan debut anniversary ke-4',
         stagger:4
       },
       {
         img:'./images/fankit-nabati.jpg',
-        title:'Fankit Event Meet & Greet aespa 2024',
+        title:'FanKit aespa Meet and Greet Nabati in Richoco Land Jakarta 2024',
         desc:'Fankit edisi Meet & Greet oleh aespainaunion',
         stagger:5
       },
       {
         img:'./images/fankit-HPL.jpg',
-        title:'Fankit konser SYNK Hyperline 2023',
+        title:'FanKit konser aespa Live Tour 2023 SYNK : HYPERLINE in Jakarta',
         desc:'Fankit edisi konser solo pertama aespa di Indonesia oleh aespainaunion',
         stagger:6
       },
       {
         img:'./images/fanpro-flashlight.gif',
-        title:'Fan Project Flashlight SYNK Hyperline 2023',
+        title:'Fan Project Flashlight aespa Live Tour 2023 SYNK : HYPERLINE in Jakarta',
         desc:'Fan project yang dikelola oleh aespainaunion untuk konser SYNK Hyperline 2023',
         stagger:7
       },
